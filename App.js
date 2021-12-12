@@ -1,21 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function App() {
+import Sudoku from './src/Sudoku';
+import Leaderboard from './src/Leaderboard';
+
+const Tab = createMaterialBottomTabNavigator();
+
+function MyTabs() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Tab.Navigator shifting = {true}>
+      <Tab.Screen
+        name="Sudoku"
+        component={Sudoku}
+        options={{
+          tabBarLabel: 'Sudoku',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="controller-classic" color={color} size={26} />
+          ),
+          tabBarColor: "#1abfdf",
+        }}
+      />
+      <Tab.Screen
+        name="Leaderboard"
+        component={Leaderboard}
+        options={{
+          tabBarLabel: 'Ranglista',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="format-list-numbered" color={color} size={26} />
+          ),
+          tabBarColor: "#fbae4b",
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
+  );
+}
